@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { MoviesContext } from "../../contexts/moviesContext";
 
+
 const AddToFavoriteButton = ({ movie }) => {
     const context = useContext(MoviesContext);
 

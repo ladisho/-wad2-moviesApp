@@ -46,6 +46,7 @@ const MoviesContextProvider = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+
     return (
         <MoviesContext.Provider
             value={{
