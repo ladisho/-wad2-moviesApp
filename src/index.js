@@ -21,17 +21,17 @@ const App = () => {
                 <div className="container-fluid">
                     <MoviesContextProvider>
                         <GenresContextProvider>    {/* NEW */}
-                            <UpcomingMoviesContextProvider>
-                                <Switch>
-                                    <Route exact path="/reviews/form" component={AddMovieReviewPage} />
-                                    <Route path="/movies/upcoming" component={UpcomingMoviesPage} />
-                                    <Route path="/reviews/:id" component={MovieReviewPage} />
-                                    <Route exact path="/movies/favorites" component={FavoriteMoviesPage} />
-                                    <Route path="/movies/:id" component={MoviePage} />
-                                    <Route path="/" component={HomePage} />
-                                    <Redirect from="*" to="/" />
-                                </Switch>
-                            </UpcomingMoviesContextProvider>
+
+                            <Switch>
+                                <Route exact path="/reviews/form" component={AddMovieReviewPage} />
+                                <Route path="/movies/upcoming" component={UpcomingMoviesPage} />
+                                <Route path="/reviews/:id" component={MovieReviewPage} />
+                                <Route exact path="/movies/favorites" component={FavoriteMoviesPage} />
+                                <Route path="/movies/:id" component={MoviePage} />
+                                <Route path="/" component={HomePage} />
+                                <Redirect from="*" to="/" />
+                            </Switch>
+
                         </GenresContextProvider>    {/* NEW */}
                     </MoviesContextProvider>
                 </div>
