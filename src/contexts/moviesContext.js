@@ -1,5 +1,5 @@
 import React, { useEffect, createContext, useReducer } from "react";
-import { getMovies, getUpcomingMovies } from "../api/tmdb-api";
+import { getMovies, getUpcomingMovies, getTopRatedMovies } from "../api/tmdb-api";
 
 export const MoviesContext = createContext(null);
 
@@ -10,6 +10,9 @@ const reducer = (state, action) => {
                 movies: state.movies.map((m) =>
                     m.id === action.payload.movie.id ? { ...m, favorite: true } : m
                 ),
+                topRated: state.topRated.map((m) =>
+                    m.id === action.payload.movie.id ? { ...m, favorite: false } : m
+                ),
                 upcoming: [...state.upcoming],
             };
         case "add-watchList":
@@ -18,12 +21,15 @@ const reducer = (state, action) => {
                     m.id === action.payload.movie.id ? { ...m, watchList: false } : m
                 ),
                 movies: [...state.movies],
+                topRated: [...state.topRated]
 
             };
         case "load":
-            return { movies: action.payload.movies, upcoming: [...state.upcoming] };
+            return { movies: action.payload.movies, upcoming: [...state.upcoming], topRated: [...state.topRated] };
         case "load-upcoming":
-            return { upcoming: action.payload.movies, movies: [...state.movies] };
+            return { upcoming: action.payload.movies, movies: [...state.movies], topRated: [...state.topRated] };
+        case "load-topRated":
+            return { topRated: action.payload.movies, movies: [...state.movies], upcoming: [...state.upcoming] };
         case "add-review":
             return {
                 movies: state.movies.map((m) =>
@@ -69,11 +75,21 @@ const MoviesContextProvider = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    useEffect(() => {
+        getTopRatedMovies().then((movies) => {
+            dispatch({ type: "load-topRated", payload: { movies } });
+        });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    
+
     return (
         <MoviesContext.Provider
             value={{
                 movies: state.movies,
                 upcoming: state.upcoming,
+                topRated: state.topRated,
                 addToFavorites: addToFavorites,
                 addToWatchList: addToWatchList,
                 addReview: addReview,
