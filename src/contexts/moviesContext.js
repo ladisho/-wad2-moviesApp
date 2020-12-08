@@ -18,7 +18,7 @@ const reducer = (state, action) => {
         case "add-watchList":
             return {
                 upcoming: state.upcoming.map((m) =>
-                    m.id === action.payload.movie.id ? { ...m, watchList: false } : m
+                    m.id === action.payload.movie.id ? { ...m, watchList: true } : m
                 ),
                 movies: [...state.movies],
                 topRated: [...state.topRated]
@@ -45,7 +45,7 @@ const reducer = (state, action) => {
 };
 
 const MoviesContextProvider = (props) => {
-    const [state, dispatch] = useReducer(reducer, { movies: [], upcoming: [] });
+    const [state, dispatch] = useReducer(reducer, { movies: [], upcoming: [], topRated: [] });
 
     const addToFavorites = (movieId) => {
         const index = state.movies.map((m) => m.id).indexOf(movieId);

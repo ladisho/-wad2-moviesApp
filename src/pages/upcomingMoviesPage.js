@@ -7,8 +7,9 @@ const UpcomingMoviesPage = () => {
     const context = useContext(MoviesContext);
     const upcoming = context.upcoming.filter((m) => {  // New
         return !("watchList" in m);
+        
     });
-
+    
     return (
         <PageTemplate
             title="Upcoming Movies"
@@ -16,6 +17,7 @@ const UpcomingMoviesPage = () => {
             action={(movie) => {
                 return <AddToWatchListButton movie={movie} />;
             }}
+            
         />
     );
 };
