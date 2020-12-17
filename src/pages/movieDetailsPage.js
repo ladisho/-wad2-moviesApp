@@ -3,6 +3,7 @@ import { Link, Route, withRouter } from "react-router-dom";
 import MovieDetails from "../components/movieDetails";
 import PageTemplate from "../components/templateMoviePage";
 import MovieReviews from "../components/movieReviews";
+import SimilarMovies from "../components/movieSimilar";
 import useMovie from "../hooks/useMovie";
 
 const MoviePage = props => {
@@ -38,6 +39,10 @@ const MoviePage = props => {
                         path={`/movies/:id/reviews`}
                         render={props => <MovieReviews movie={movie} {...props} />}
                     />
+                    
+                        
+                    <SimilarMovies movie={movie} />
+                    
                 </>
             ) : (
                     <p>Waiting for movie details</p>

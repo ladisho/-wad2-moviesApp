@@ -59,7 +59,8 @@ const SiteHeader = () => {
                             Popular
             </Link>
                     </li>
-                </ul>
+
+                </ul> 
             </nav>
         </nav>
     );
