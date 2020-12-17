@@ -14,8 +14,21 @@ import AddMovieReviewPage from './pages/addMovieReviewPage';
 import TopRatedMoviesPage from "./pages/topRatedMoviesPage";
 import WatchListMoviesPage from './pages/watchListMoviesPage';
 import PopularMoviesPage from './pages/popularMoviesPage';
+import { useState, useMemo } from "react";
+import { UserContext } from "./hooks/UserContext";
+import { Login } from './pages/'
+
+
+import PublicRoute from './hooks/PublicRoute'
+import PrivateRoute from './hooks/PrivateRoute'
+
+
+
 
 const App = () => {
+    const [user, setUser] = useState(null);
+
+    const value = useMemo(() => ({ user, setUser }), [user, setUser]);
     return (
         <BrowserRouter>
             <div className="jumbotron">
@@ -23,20 +36,21 @@ const App = () => {
                 <div className="container-fluid">
                     <MoviesContextProvider>
                         <GenresContextProvider>    {/* NEW */}
-
-                            <Switch>
-                                <Route path="/movies/watchList" component={WatchListMoviesPage} />
-                                <Route path="/movies/topRated" component={TopRatedMoviesPage} />
-                                <Route path="/movies/popular" component={PopularMoviesPage} />
-                                <Route exact path="/reviews/form" component={AddMovieReviewPage} />
-                                <Route path="/movies/upcoming" component={UpcomingMoviesPage} />
-                                <Route path="/reviews/:id" component={MovieReviewPage} />
-                                <Route exact path="/movies/favorites" component={FavoriteMoviesPage} />
-                                <Route path="/movies/:id" component={MoviePage} />
-                                <Route path="/" component={HomePage} />
-                                <Redirect from="*" to="/" />
-                            </Switch>
-
+                            <UserContext.Provider value={value}>
+                                <Switch>
+                                    <PublicRoute restricted={true} component={Login} path="/" exact />
+                                    <PrivateRoute path="/movies/watchList" component={WatchListMoviesPage} />
+                                    <PrivateRoute path="/movies/topRated" component={TopRatedMoviesPage} />
+                                    <PrivateRoute path="/movies/popular" component={PopularMoviesPage} />
+                                    <PrivateRoute exact path="/reviews/form" component={AddMovieReviewPage} />
+                                    <PrivateRoute path="/movies/upcoming" component={UpcomingMoviesPage} />
+                                    <PrivateRoute path="/reviews/:id" component={MovieReviewPage} />
+                                    <PrivateRoute exact path="/movies/favorites" component={FavoriteMoviesPage} />
+                                    <PrivateRoute path="/movies/:id" component={MoviePage} />
+                                    <Route path="/" component={HomePage} />
+                                    <Redirect from="*" to="/" />
+                                </Switch>
+                            </UserContext.Provider>     
                         </GenresContextProvider>    {/* NEW */}
                     </MoviesContextProvider>
                 </div>
